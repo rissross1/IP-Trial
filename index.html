@@ -256,7 +256,6 @@ document.getElementById("mac").addEventListener("input",function(){
  this.value=o});
 
 /* ---- Activation form ---- */
-var API="https://activationpanel.ru/api/api.php?action=new&type=m3u&sub=99&pack=38238&notes=",KEY="&api_key=c6a59301faf38f1ef40cbdbae67d77c7";
 var CL="DZ|Algeria|213;AR|Argentina|54;AU|Australia|61;AT|Austria|43;BH|Bahrain|973;BE|Belgium|32;BR|Brazil|55;BG|Bulgaria|359;CM|Cameroon|237;CA|Canada|1;CL|Chile|56;CO|Colombia|57;HR|Croatia|385;CY|Cyprus|357;CZ|Czechia|420;DK|Denmark|45;EG|Egypt|20;FI|Finland|358;FR|France|33;DE|Germany|49;GR|Greece|30;HU|Hungary|36;IN|India|91;ID|Indonesia|62;IE|Ireland|353;IL|Israel|972;IT|Italy|39;CI|Ivory Coast|225;JP|Japan|81;JO|Jordan|962;KW|Kuwait|965;LB|Lebanon|961;LY|Libya|218;LU|Luxembourg|352;MY|Malaysia|60;MR|Mauritania|222;MX|Mexico|52;MA|Morocco|212;NL|Netherlands|31;NZ|New Zealand|64;NG|Nigeria|234;NO|Norway|47;OM|Oman|968;PK|Pakistan|92;PE|Peru|51;PH|Philippines|63;PL|Poland|48;PT|Portugal|351;QA|Qatar|974;RO|Romania|40;RU|Russia|7;SA|Saudi Arabia|966;SN|Senegal|221;RS|Serbia|381;SG|Singapore|65;SK|Slovakia|421;ZA|South Africa|27;KR|South Korea|82;ES|Spain|34;SE|Sweden|46;CH|Switzerland|41;TN|Tunisia|216;TR|Turkey|90;UA|Ukraine|380;AE|United Arab Emirates|971;GB|United Kingdom|44;US|United States|1;VE|Venezuela|58";
 var ML={DZ:9,AR:10,AU:9,AT:13,BH:8,BE:9,BR:11,BG:9,CM:9,CA:10,CL:9,CO:10,HR:9,CY:8,CZ:9,DK:8,EG:10,FI:10,FR:9,DE:11,GR:10,HU:9,IN:10,ID:12,IE:9,IL:9,IT:10,CI:10,JP:10,JO:9,KW:8,LB:8,LY:9,LU:9,MY:10,MR:8,MX:10,MA:9,NL:9,NZ:10,NG:10,NO:8,OM:8,PK:10,PE:9,PH:10,PL:9,PT:9,QA:8,RO:9,RU:10,SA:9,SN:9,RS:9,SG:8,SK:9,ZA:9,KR:10,ES:9,SE:9,CH:9,TN:8,TR:10,UA:9,AE:9,GB:10,US:10,VE:10};
 var F={DZ:["### ## ## ##","551234567"],AR:["## ####-####","1123456789"],AU:["### ### ###","412345678"],AT:["### #######","6641234567"],BH:["#### ####","36001234"],BE:["### ## ## ##","470123456"],BR:["(##) #####-####","11912345678"],BG:["## ### ####","871234567"],CM:["# ## ## ## ##","671234567"],CA:["(###) ###-####","4165550123"],CL:["# #### ####","961234567"],CO:["### #######","3211234567"],HR:["## ### ####","912345678"],CY:["## ######","96123456"],CZ:["### ### ###","601123456"],DK:["## ## ## ##","32123456"],EG:["### ### ####","1001234567"],FI:["## ### ####","412345678"],FR:["# ## ## ## ##","612345678"],DE:["### ########","15112345678"],GR:["### ### ####","6912345678"],HU:["## ### ####","201234567"],IN:["##### #####","9876543210"],ID:["### ####-####","81234567890"],IE:["## ### ####","851234567"],IL:["##-###-####","501234567"],IT:["### ### ####","3123456789"],CI:["## ## ## ## ##","0123456789"],JP:["## ####-####","9012345678"],JO:["# #### ####","790123456"],KW:["#### ####","50001234"],LB:["## ### ###","71123456"],LY:["## ### ####","912345678"],LU:["### ### ###","628123456"],MY:["##-### ####","123456789"],MR:["## ## ## ##","22123456"],MX:["## #### ####","5512345678"],MA:["# ## ## ## ##","612345678"],NL:["# ########","612345678"],NZ:["## ### ####","211234567"],NG:["### ### ####","8021234567"],NO:["### ## ###","41234567"],OM:["#### ####","92123456"],PK:["### #######","3012345678"],PE:["### ### ###","912345678"],PH:["### ### ####","9171234567"],PL:["### ### ###","512345678"],PT:["### ### ###","912345678"],QA:["#### ####","33123456"],RO:["### ### ###","712345678"],RU:["(###) ###-##-##","9123456789"],SA:["## ### ####","512345678"],SN:["## ### ## ##","771234567"],RS:["## ### ####","601234567"],SG:["#### ####","81234567"],SK:["### ### ###","912123456"],ZA:["## ### ####","712345678"],KR:["##-####-####","1012345678"],ES:["### ## ## ##","612345678"],SE:["##-### ## ##","701234567"],CH:["## ### ## ##","781234567"],TN:["## ### ###","20123456"],TR:["(###) ### ## ##","5321234567"],UA:["## ### ####","501234567"],AE:["## ### ####","501234567"],GB:["#### ######","7123456789"],US:["(###) ###-####","2015550123"],VE:["###-#######","4121234567"]};
@@ -295,20 +294,60 @@ setPh();fitPhone();check();
 var dlg=$("done");
 $("closeDone").onclick=function(){dlg.close()};
 dlg.addEventListener("click",function(e){if(e.target===dlg)dlg.close()});
-$("trial").addEventListener("submit",function(e){
- e.preventDefault();check();FM.textContent="";
- if(!this.reportValidity())return;
- var btn=$("send"),name=$("name").value.trim(),phone="+"+dial()+digits(),
-  email=$("email").value.trim(),tw="@"+xx.value,mac=mc.value,
-  note=name+" : "+phone+" / "+email+" | MAC: "+mac+" | X: "+tw;
- btn.disabled=true;btn.textContent="Activating…";
- fetch(API+encodeURIComponent(note)+KEY,{mode:"no-cors"}).then(function(){
-  btn.textContent="Trial activated";
-  try{if(dlg.showModal)dlg.showModal();else dlg.setAttribute("open","")}catch(err){console.error(err);dlg.setAttribute("open","")}
- },function(err){
-  console.error("Activation request failed:",err);
-  FM.textContent="We couldn’t reach the activation server. Check your connection and try again.";
-  btn.disabled=false;btn.textContent="Activate my trial"})});
+$("trial").addEventListener("submit", function(e) {
+  e.preventDefault();
+  check();
+  FM.textContent = "";
+  if (!this.reportValidity()) return;
+
+  var btn = $("send");
+  var name = $("name").value.trim();
+  var phone = "+" + dial() + digits();
+  var email = $("email").value.trim();
+  var tw = "@" + xx.value;
+  var mac = mc.value.trim();
+
+  btn.disabled = true;
+  btn.textContent = "Activating…";
+
+  fetch("https://zenith.opstv.workers.dev", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name: name,
+      phone: phone,
+      email: email,
+      twitter: tw,
+      mac: mac
+    })
+  })
+  .then(function(res) {
+    return res.json().then(function(data) {
+      return { ok: res.ok, data: data };
+    });
+  })
+  .then(function(result) {
+    if (result.ok && result.data.success) {
+      btn.textContent = "Trial activated";
+      try {
+        if (dlg.showModal) dlg.showModal();
+        else dlg.setAttribute("open", "");
+      } catch (err) {
+        dlg.setAttribute("open", "");
+      }
+    } else {
+      FM.textContent = result.data.error || "Could not activate trial. Please check your MAC address.";
+      btn.disabled = false;
+      btn.textContent = "Activate my trial";
+    }
+  })
+  .catch(function(err) {
+    console.error("Activation request failed:", err);
+    FM.textContent = "We couldn’t reach the activation server. Check your connection and try again.";
+    btn.disabled = false;
+    btn.textContent = "Activate my trial";
+  });
+});
 
 /* ---- Hero choice: show one path at a time ---- */
 function showPath(p){
