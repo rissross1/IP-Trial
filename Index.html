@@ -337,10 +337,13 @@ $("trial").addEventListener("submit", function(e) {
         dlg.setAttribute("open", "");
       }
     } else {
-      FM.textContent = result.data.error || "Could not activate trial. Please check your MAC address.";
-      btn.disabled = false;
-      btn.textContent = "Activate my trial";
-    }
+         FM.textContent = result.data.error || "Could not activate trial. Please check your MAC address.";
+         if (result.data.expired_trial) {
+           FM.innerHTML += '<br><a class="btn wa sm" href="#help" data-go="help" style="margin-top:.8rem;display:inline-block;">Go to WhatsApp Support ↓</a>';
+         }
+         btn.disabled = false;
+         btn.textContent = "Activate my trial";
+       }
   })
   .catch(function(err) {
     console.error("Activation request failed:", err);
