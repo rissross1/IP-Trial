@@ -338,9 +338,7 @@ $("trial").addEventListener("submit", function(e) {
       }
     } else {
          FM.textContent = result.data.error || "Could not activate trial. Please check your MAC address.";
-         if (result.data.expired_trial) {
-           FM.innerHTML += '<br><a class="btn wa sm" href="#help" data-go="help" style="margin-top:.8rem;display:inline-block;">Go to WhatsApp Support ↓</a>';
-         }
+         FM.innerHTML = FM.innerHTML.replace(/WhatsApp/g, '<a href="https://api.whatsapp.com/send/?phone=212611608255" target="_blank" rel="noopener" style="color:#5B8DEF;text-decoration:underline;">WhatsApp</a>');
          btn.disabled = false;
          btn.textContent = "Activate my trial";
        }
